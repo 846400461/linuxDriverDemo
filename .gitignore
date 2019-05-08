@@ -8,3 +8,7 @@
 core
 .tmp_versions/
 *.symvers
+GPATH
+GRTAGS
+GTAGS
+
