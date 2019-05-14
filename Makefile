@@ -2,7 +2,7 @@ CONFIG_HELLO			?=m
 obj-$(CONFIG_HELLO)		+=virtualmem.o
 virtualmem-objs			:=virtualmem_main.o virtualmem_operations.o
 KDIR				:=$$PWD"/../../"
-ARCH				:= arm                                  #add for caibin
+ARCH				:= arm                                  #add for caibinsss
 CROSS_COMPILE			:=arm-none-linux-gnueabi-               #add for caibin
 
 default:
