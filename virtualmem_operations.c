@@ -3,12 +3,29 @@
 #include<linux/uaccess.h>
 #include"virtualmem_type.h"
 #include<linux/errno.h>
+#include<linux/module.h>
+#include<linux/io.h>
+static bool b=true;
+static void __iomem* GPJ2CON;
+static void __iomem* GPJ2DAT;
 
 static int my_open(struct inode *inode,struct file *file)
 {
         struct test_dev *my_data;
         my_data=container_of(inode->i_cdev,struct test_dev,cdev);
         file->private_data=my_data;
+	GPJ2CON=ioremap(0xE0200280,8);
+	GPJ2DAT=GPJ2CON+4;
+	if(!GPJ2CON){
+		printk("gpio erro!\n");
+		return -1;
+	}
+	*(unsigned int *)GPJ2CON=0x11111111;
+	if(b)
+		*(unsigned int *)GPJ2DAT=(1<<0|1<<2);
+	else
+		*(unsigned int *)GPJ2DAT=(1<<1|1<<3);
+	b=!b;		
         return 0;
 }
 
